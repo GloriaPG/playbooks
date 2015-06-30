@@ -1,0 +1,15 @@
+---
+- hosts: dev
+    - name: Install Docker on  Server
+      hosts: all
+      pre_tasks:
+       - name: Install the docker role
+         command: ansible-galaxy install angstwad.docker_ubuntu
+    - name: start docker service
+      service: name=docker state=started
+      sudo: true
+    - name: Docker pull images
+    -shell: docker pull redis
+    -shell: docker pull mysql
+    -shell: docker pull dockermd/gvm:2.2.4
+
