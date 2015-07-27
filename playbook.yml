@@ -1,0 +1,12 @@
+# playbook.yml
+---
+
+#Install docker and run image for enviroment grails
+- hosts: client-one
+  roles:
+    - client-one
+#Install simple eviroment for php
+- hosts: client-two
+  roles:
+    - client-two
+
