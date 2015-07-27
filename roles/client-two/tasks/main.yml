@@ -1,0 +1,14 @@
+# roles/client-two/tasks/main.yml
+---
+- name: 1. Install Apache
+  apt: name=apache2 state=present
+
+- name: 2. Install PHP
+  apt: name=libapache2-mod-php5 state=present
+
+- name: 3. Start Apache
+  service: name=apache2 state=running enabled=yes
+
+- name: 4. Copy index.php
+  copy: src=index.php dest=/var/www/index.php mode=0664
+
