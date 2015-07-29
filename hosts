@@ -1,6 +1,0 @@
-[client-one]
-192.168.33.11  ansible_ssh_user=vagrant ansible_ssh_pass=vagrant
-
-[client-two]
-192.168.33.12 ansible_ssh_user=vagrant ansible_ssh_pass=vagrant
-
