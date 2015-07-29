@@ -17,26 +17,26 @@ Los objetivos que cubriremos en está practica son los siguientes:
 Para instalar Ansible sólo tenemos que ejecutar los siguientes comando en terminal.
 En caso de tener un comṕlicación por favor revisar los requerimientos para instalar ansible (aquí.)[http://docs.ansible.com/ansible/intro_installation.html#control-machine-requirements]
 
-´´´
+
 $ sudo apt-get install software-properties-common
 $ sudo apt-add-repository ppa:ansible/ansible
 $ sudo apt-get update
 $ sudo apt-get install ansible
-´´´
+
 # Crear maquina Virtual con Vagrant
 Es un paso muy simple.
 
 1. Crea un directorio donde quieres este tu máquina virtual.
 2. Ejecuta los siguientes comandos en ese directorio:
-´´´
+
  $ vagrant initubuntu/trusty64
  $ vagrant up
 
-´´´
+
 ###### Nota : Vagrant 1.4 suele tener problemas con levantar de está manera una maquina por lo que recomiendo usar la versión 1.7 de Vagrant.
 
 Una vez que ha levantado tu máquina virtual ejecuta el siguiente comando **vagrant ssh-config**, saldrá algo como esto :
-´´´
+```
 Host default
   HostName 127.0.0.1
   User vagrant
@@ -48,7 +48,7 @@ Host default
   IdentitiesOnly yes
   LogLevel FATAL
 
-´´´
+```
 Lo que nos interesa de está información es el User,  IdentityFile y el puerto porque lo usaremos para trabajar con Ansible.
 
 # Aprovisionamiento con Ansible
@@ -70,7 +70,7 @@ Crearemos también los siguientes directorios:
 **tasks**: Aquí tendremos un archivo con el nombre de main.yml el cual tendrá un listado de tareas a ejecutar
 
 Nuestro directorio dentro de /etc/ansible lucirá así:
-´´´
+```
 .
 ├── ansible.cfg
 ├── hosts
@@ -86,7 +86,7 @@ Nuestro directorio dentro de /etc/ansible lucirá así:
         └── tasks
             └── main.yml
 
-´´´
+```
 Es una manera elegante de organizar nuestros archivos, facil e intuitiva.
 
 El role client-one, preparará nuestro servidor ( nuestra máquina virtual con vagrant) para trabajar con grails 2.2.4, y todo este ambiente lo manejaremos con contenedores de Docker, es decir, instalaremos Docker, haremos pull de las imagenes y las correremos.
@@ -95,14 +95,14 @@ El role client-two provisionará nuestro servidor para poder tener una aplicaci�
 
 # Configurar playbook y archivo hosts
 Para configurar el host pondremos lo siguiente en el archivo hosts:
-´´´
+```
 [client-one]
 127.0.0.1 ansible_ssh_user=vagrant ansible_ssh_private_key_file=/home/gloria/.vagrant.d/insecure_private_key  ansible_ssh_port=2222
-´´´
+```
 Estamos indicando la ip de nuestro servidor remoto (maquina virtual), el usuario ssh, la ubicación de la llave privada y el puerto ssh, estos datos los tomamos de el resultado de ejecuta **vagrant ssh-config**.
 
 En nuestro playbook, agregaremos lo siguiente :
-´´´
+```
 # playbook.yml
 ---
 
@@ -112,7 +112,7 @@ En nuestro playbook, agregaremos lo siguiente :
     - client-one
     - client-two
 
-´´´
+```
 
 Lo que estamos diciendo aquí, es: A nuestro host client-one (como lo definimos en el archivo hosts) le pertenecen los roles client-one y client-two .
 
@@ -120,7 +120,7 @@ En caso que en el archivo de hosts en lugar de darle el nombre de client-one a n
 
 # Configuración de roles
 Para el role client-one crearemos un archivo llamado main.yml dentro del directorio tasks, este contendrá el listado de tareas que queremos se ejecuten, debe ir de está manera:
-´´´
+```
 # roles/clien-one/tasks/main.yml
 ---
 - name: 1. Upgrade
@@ -141,10 +141,9 @@ Para el role client-one crearemos un archivo llamado main.yml dentro del directo
   shell: docker run --name some-grails  dockermd/gvm:2.2.4
 - name: 9. Docker run mysql
   shell: docker run --name some-mysql -e MYSQL_ROOT_PASSWORD=root -d mysql
-
-´´´
+```
 Para el cliente-two usaremos el directorio de tasks y files, en files, podremos un simple index.php el cual copiaremos a nuestro servidor remoto y dentro de tasks crearemos un archivo main.yml, quedara así:
-´´´
+```
 # roles/client-two/tasks/main.yml
 ---
 - name: 1. Install Apache
@@ -158,8 +157,8 @@ Para el cliente-two usaremos el directorio de tasks y files, en files, podremos 
 
 - name: 4. Copy index.php
   copy: src=index.php dest=/var/www/index.php mode=0664
+```
 
-´´´
 # Run y test
 
 Para probar que tenemos conexión con el host que deseamos, usaremos este comando a nivel del archivo playbook.yml:
@@ -167,13 +166,13 @@ Para probar que tenemos conexión con el host que deseamos, usaremos este comand
   $ ansible client-one  -i hosts -m ping
   
 Sí nos conectamos correctamente debe arrojar el siguiente resultado en la terminal:
-´´´
+```
 127.0.0.1 | success >> {
     "changed": false, 
     "ping": "pong"
 }
 
-´´´
+```
 Para correr el playbook ejecute el comando ansible-playbook.
 
 $ ansible-playbook -i hosts playbook.yml --sudo --verbose
