@@ -1,0 +1,20 @@
+# roles/clien-one/tasks/main.yml
+---
+- name: 1. Upgrade
+  apt: update_cache=yes
+- name: 2. Install wget
+  apt: name=wget state=present
+- name: 3. Install Docker
+  shell: wget -qO- https://get.docker.com/ | sh
+- name: 4. Docker pull image redis
+  shell: docker pull redis
+- name: 5. Docker pull image grails
+  shell: docker pull dockermd/gvm:2.2.4
+- name: 6. Docker pull image mysql
+  shell: docker pull mysql
+- name: 7. Docker run redis
+  shell: docker run --name some-redis -d redis
+- name: 8. Docker run grails
+  shell: docker run --name some-grails  dockermd/gvm:2.2.4
+- name: 9. Docker run mysql
+  shell: docker run --name some-mysql -e MYSQL_ROOT_PASSWORD=root -d mysql
