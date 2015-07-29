@@ -165,7 +165,7 @@ Para probar que tenemos conexión con el host que deseamos, usaremos este comand
   
   $ ansible client-one  -i hosts -m ping
   
-Sí nos conectamos correctamente debe arrojar el siguiente resultado en la terminal:
+Si nos conectamos correctamente debe arrojar el siguiente resultado en la terminal:
 ```
 127.0.0.1 | success >> {
     "changed": false, 
@@ -179,7 +179,7 @@ $ ansible-playbook -i hosts playbook.yml --sudo --verbose
 
 Y este es el comando que nos permitirá ejecutar las tareas dentro del servidor remoto, por medio de un playbook con roles asignados a un host.
 
-Espero sea de ayuda, i'm beginner Ansible :D
+Espero sea de ayuda, i'm an beginner Ansible :D
 
 
 
