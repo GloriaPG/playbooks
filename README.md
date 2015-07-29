@@ -11,7 +11,7 @@ Los objetivos que cubriremos en está practica son los siguientes:
 5. Crear ficheros de tareas.
 6. Uso de modulos Ansible.
 7. Instalar Docker, hacer pull y run Docker.
-8. Instala PHP y apache. Copiar archivos al servidor remoto.
+8. Instala PHP y AQpache. Copiar archivos al servidor remoto.
 
 # Instalar Ansible
 Para instalar Ansible sólo tenemos que ejecutar los siguientes comando en terminal.
