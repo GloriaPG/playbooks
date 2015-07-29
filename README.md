@@ -15,7 +15,7 @@ Los objetivos que cubriremos en está practica son los siguientes:
 
 # Instalar Ansible
 Para instalar Ansible sólo tenemos que ejecutar los siguientes comando en terminal.
-En caso de tener un comṕlicación por favor revisar los requerimientos para instalar ansible (aquí.)[http://docs.ansible.com/ansible/intro_installation.html#control-machine-requirements]
+En caso de tener un comṕlicación por favor revisar los requerimientos para instalar ansible [aquí.](http://docs.ansible.com/ansible/intro_installation.html#control-machine-requirements)
 
 
 $ sudo apt-get install software-properties-common
